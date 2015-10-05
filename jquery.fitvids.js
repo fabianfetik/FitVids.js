@@ -15,7 +15,9 @@
   $.fn.fitVids = function( options ) {
     var settings = {
       customSelector: null,
-      ignore: null
+      ignore: null,
+      maxWidth: false,
+      maxWidthDefault: 900
     };
 
     if(!document.getElementById('fit-vids-style')) {
@@ -75,6 +77,9 @@
           $this.attr('id', videoID);
         }
         $this.wrap('<div class="fluid-width-video-wrapper"></div>').parent('.fluid-width-video-wrapper').css('padding-top', (aspectRatio * 100)+'%');
+        if (settings.maxWidth && (width || settings.maxWidthDefault)) {
+          $this.parent('.fluid-width-video-wrapper').wrap('<div class="max-width-video-wrapper"></div>').parent('.max-width-video-wrapper').css('max-width', width ? width + "px" : settings.maxWidthDefault + "px");
+        }
         $this.removeAttr('height').removeAttr('width');
         // Now that we've used any height/width (typically specified in px) in the style attribute
         // to make this iframe responsive, remove the height/width as they'd otherwise contrain the iframe.
